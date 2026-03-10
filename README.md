@@ -11,7 +11,7 @@
 AgentProfile is a JSON-based open standard for describing AI agents. It provides a unified format to capture an agent's identity, capabilities, behavioral specifications, and toolset — all generated from a single natural language instruction.
 
 ```
-"A customer support agent for SaaS products" → AgentProfile JSON → Ready-to-use Agent
+"A customer support agent for SaaS products" → AgentProfile → Ready-to-use Agent
 ```
 
 ## Workflow
@@ -32,7 +32,7 @@ AgentProfile is a JSON-based open standard for describing AI agents. It provides
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    AgentProfile JSON                      │
+│                      AgentProfile                        │
 │  { name, description, details, skills, tools, ... }      │
 └────────────────────────┬────────────────────────────────┘
                          │
@@ -163,7 +163,7 @@ We welcome contributions! You can:
 
 1. **Submit new profile examples** — share effective agent profiles for different scenarios
 2. **Improve the spec** — propose additions or refinements to the profile format
-3. **Build integrations** — create tools that consume or generate AgentProfile JSON
+3. **Build integrations** — create tools that consume or generate AgentProfile documents
 
 ## License
 
