@@ -132,33 +132,130 @@
     section p { color: var(--text-muted); margin-bottom: 16px; }
 
     /* Workflow */
-    .workflow-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+    .workflow {
       margin-top: 24px;
     }
-    .step {
+    .wf-pipeline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .wf-node {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px 32px;
       text-align: center;
+      width: 100%;
+      max-width: 520px;
     }
-    .step-num {
-      display: inline-flex;
+    .wf-node h3 { font-size: 1rem; margin-bottom: 4px; }
+    .wf-node p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+    .wf-node.input {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.06);
+    }
+    .wf-node.input h3 { color: var(--primary-light); }
+    .wf-node.output {
+      border-color: var(--accent);
+      background: rgba(34, 211, 238, 0.05);
+    }
+    .wf-node.output h3 { color: var(--accent); }
+    .wf-node.result {
+      border-color: var(--green);
+      background: rgba(52, 211, 153, 0.05);
+    }
+    .wf-node.result h3 { color: var(--green); }
+    .wf-connector {
+      width: 2px;
+      height: 28px;
+      background: var(--border);
+      position: relative;
+    }
+    .wf-connector::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--border);
+    }
+    /* Constructor card */
+    .wf-constructor {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 600px;
+    }
+    .wf-constructor-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .wf-constructor-title span {
+      color: var(--primary-light);
+    }
+    .wf-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .wf-action {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+    .wf-action-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: var(--primary);
-      color: white;
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      flex-shrink: 0;
     }
-    .step h3 { font-size: 1rem; margin-bottom: 8px; }
-    .step p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+    .wf-action-icon.generate { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
+    .wf-action-icon.tools { background: rgba(251, 146, 60, 0.12); color: var(--orange); }
+    .wf-action-icon.skills { background: rgba(34, 211, 238, 0.1); color: var(--accent); }
+    .wf-action-text { flex: 1; }
+    .wf-action-text strong { font-size: 0.85rem; display: block; margin-bottom: 2px; }
+    .wf-action-text span { font-size: 0.78rem; color: var(--text-muted); }
+    .wf-repos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .wf-repo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .wf-repo-icon {
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .wf-repos { grid-template-columns: 1fr; }
+      .wf-node, .wf-constructor { max-width: 100%; }
+    }
 
     /* Schema */
     .schema-block {
@@ -359,50 +456,106 @@
     <section>
       <h2 data-lang="en">How It <span>Works</span></h2>
       <h2 data-lang="zh">工作<span>流程</span></h2>
-      <p data-lang="en">From a single sentence to a fully functional AI agent in four steps.</p>
-      <p data-lang="zh">从一句话到一个可用的 AI Agent，只需四步。</p>
-      <div class="workflow-steps" data-lang="en">
-        <div class="step">
-          <div class="step-num">1</div>
-          <h3>Describe</h3>
-          <p>Write a one-sentence description of the agent you need</p>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h3>Generate</h3>
-          <p>Agent Constructor produces name, description, and detailed behavioral specifications</p>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <h3>Match</h3>
-          <p>Fetch matching tools and skills from tool repository and skill repository</p>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <h3>Deploy</h3>
-          <p>Profile creates a ready-to-use agent workspace</p>
+      <p data-lang="en">From a single sentence to a fully functional AI agent.</p>
+      <p data-lang="zh">从一句话到一个可用的 AI Agent。</p>
+
+      <div class="workflow" data-lang="en">
+        <div class="wf-pipeline">
+          <div class="wf-node input">
+            <h3>One Sentence Instruction</h3>
+            <p>"A code review assistant for Python projects"</p>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-constructor">
+            <div class="wf-constructor-title">Agent <span>Constructor</span></div>
+            <div class="wf-actions">
+              <div class="wf-action">
+                <div class="wf-action-icon generate">G</div>
+                <div class="wf-action-text">
+                  <strong>Generate Profile</strong>
+                  <span>Produce name, description, and detailed behavioral specifications</span>
+                </div>
+              </div>
+              <div class="wf-action">
+                <div class="wf-action-icon tools">T</div>
+                <div class="wf-action-text">
+                  <strong>Match Tools</strong>
+                  <span>Fetch matching tools from the tool repository</span>
+                </div>
+              </div>
+              <div class="wf-action">
+                <div class="wf-action-icon skills">S</div>
+                <div class="wf-action-text">
+                  <strong>Match Skills</strong>
+                  <span>Fetch matching skills from the skill repository</span>
+                </div>
+              </div>
+            </div>
+            <div class="wf-repos">
+              <div class="wf-repo"><span class="wf-repo-icon">T</span> Tool Repository</div>
+              <div class="wf-repo"><span class="wf-repo-icon">S</span> Skill Repository</div>
+            </div>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-node output">
+            <h3>AgentProfile JSON</h3>
+            <p>{ name, description, details, tools, skills, ... }</p>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-node result">
+            <h3>Ready Agent</h3>
+            <p>Deploy to workspace and start interacting with users</p>
+          </div>
         </div>
       </div>
-      <div class="workflow-steps" data-lang="zh">
-        <div class="step">
-          <div class="step-num">1</div>
-          <h3>描述</h3>
-          <p>用一句话描述你需要的 Agent</p>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h3>生成</h3>
-          <p>Agent 构造器生成名称、描述和详细的行为规范</p>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <h3>匹配</h3>
-          <p>从工具仓库和技能仓库中获取适配的工具与技能</p>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <h3>部署</h3>
-          <p>Profile 创建可直接使用的 Agent 工作空间</p>
+
+      <div class="workflow" data-lang="zh">
+        <div class="wf-pipeline">
+          <div class="wf-node input">
+            <h3>一句话指令</h3>
+            <p>"Python 项目代码审查助手"</p>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-constructor">
+            <div class="wf-constructor-title">Agent <span>构造器</span></div>
+            <div class="wf-actions">
+              <div class="wf-action">
+                <div class="wf-action-icon generate">G</div>
+                <div class="wf-action-text">
+                  <strong>生成 Profile</strong>
+                  <span>生成名称、描述和详细的行为规范</span>
+                </div>
+              </div>
+              <div class="wf-action">
+                <div class="wf-action-icon tools">T</div>
+                <div class="wf-action-text">
+                  <strong>匹配工具</strong>
+                  <span>从工具仓库中获取适配的工具</span>
+                </div>
+              </div>
+              <div class="wf-action">
+                <div class="wf-action-icon skills">S</div>
+                <div class="wf-action-text">
+                  <strong>匹配技能</strong>
+                  <span>从技能仓库中获取适配的技能</span>
+                </div>
+              </div>
+            </div>
+            <div class="wf-repos">
+              <div class="wf-repo"><span class="wf-repo-icon">T</span> 工具仓库</div>
+              <div class="wf-repo"><span class="wf-repo-icon">S</span> 技能仓库</div>
+            </div>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-node output">
+            <h3>AgentProfile JSON</h3>
+            <p>{ name, description, details, tools, skills, ... }</p>
+          </div>
+          <div class="wf-connector"></div>
+          <div class="wf-node result">
+            <h3>可用 Agent</h3>
+            <p>部署到工作空间，开始与用户交互</p>
+          </div>
         </div>
       </div>
     </section>
