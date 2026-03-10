@@ -67,7 +67,7 @@ AgentProfile 是一个 JSON 文件，结构如下：
   // 可选：要加载的技能目录名
   "skills": ["python-lint", "security-scan"],
 
-  // 可选：子 Agent 名称
+  // 可选：子 Agent 名称（每项引用另一个 AgentProfile）
   "subagents": []
 }
 ```
@@ -82,7 +82,7 @@ AgentProfile 是一个 JSON 文件，结构如下：
 | `agent_template` | `string` | 否 | 模板类型，默认为 `"default"` |
 | `tools` | `string[]` | 否 | 从工具仓库中匹配的工具标识符 |
 | `skills` | `string[]` | 否 | 从技能仓库中匹配的技能模块 |
-| `subagents` | `string[]` | 否 | 用于任务委派的子 Agent |
+| `subagents` | `string[]` | 否 | 用于任务委派的子 Agent 名称，每项引用另一个 AgentProfile 的 `name` |
 
 ### Details 格式
 

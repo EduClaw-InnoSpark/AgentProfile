@@ -29,8 +29,63 @@
     }
     .container { max-width: 840px; margin: 0 auto; padding: 0 24px; }
 
+    /* Sidebar + Main layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 49px);
+    }
+    .sidebar {
+      position: sticky;
+      top: 49px;
+      height: calc(100vh - 49px);
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      flex-shrink: 0;
+    }
+    .sidebar h3 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar li a:hover {
+      color: var(--text);
+      background: rgba(99, 102, 241, 0.04);
+    }
+    .sidebar li a.active {
+      color: var(--primary-light);
+      border-left-color: var(--primary-light);
+      background: rgba(99, 102, 241, 0.08);
+    }
+    .main-content {
+      padding: 0 48px 60px;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+
     /* Language toggle */
-    /* Language toggle — inside tab-nav */
     .lang-toggle {
       display: flex;
       margin-left: auto;
@@ -91,29 +146,6 @@
       border-bottom-color: var(--primary-light);
     }
 
-    /* Nav */
-    .top-nav {
-      padding: 20px 0;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 48px;
-    }
-    .top-nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .top-nav a:hover { color: var(--primary-light); }
-    .top-nav .brand {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-    .top-nav .sep { color: var(--border); }
-
     /* Page header */
     .page-header {
       padding: 16px 0 48px;
@@ -136,23 +168,10 @@
     }
     .page-header p { color: var(--text-muted); max-width: 640px; }
 
-    /* TOC */
-    .toc {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 28px;
-      margin-bottom: 48px;
-    }
-    .toc h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 12px; }
-    .toc ol { padding-left: 20px; }
-    .toc li { margin-bottom: 6px; }
-    .toc a { color: var(--primary-light); text-decoration: none; font-size: 0.9rem; }
-    .toc a:hover { text-decoration: underline; }
 
     /* Sections */
-    .spec-section { padding: 40px 0; border-top: 1px solid var(--border); }
-    .spec-section:first-of-type { border-top: none; padding-top: 0; }
+    .spec-section { padding: 40px 0; }
+    .spec-section:first-of-type { padding-top: 0; }
     .spec-section h2 {
       font-size: 1.5rem; font-weight: 700; margin-bottom: 16px;
     }
@@ -310,7 +329,38 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="layout">
+
+    <!-- Sidebar TOC -->
+    <aside class="sidebar">
+      <h3 data-lang="en">Contents</h3>
+      <h3 data-lang="zh">目录</h3>
+      <ul data-lang="en">
+        <li><a href="#overview" class="toc-link active" data-section="overview">Overview</a></li>
+        <li><a href="#file-format" class="toc-link" data-section="file-format">File Format &amp; Conventions</a></li>
+        <li><a href="#fields" class="toc-link" data-section="fields">Field Definitions</a></li>
+        <li><a href="#details-format" class="toc-link" data-section="details-format">Details Format</a></li>
+        <li><a href="#repositories" class="toc-link" data-section="repositories">Tool &amp; Skill Repositories</a></li>
+        <li><a href="#example" class="toc-link" data-section="example">Complete Example</a></li>
+        <li><a href="#validation" class="toc-link" data-section="validation">Validation Rules</a></li>
+        <li><a href="#best-practices" class="toc-link" data-section="best-practices">Best Practices</a></li>
+        <li><a href="#versioning" class="toc-link" data-section="versioning">Versioning</a></li>
+      </ul>
+      <ul data-lang="zh">
+        <li><a href="#overview" class="toc-link active" data-section="overview">概述</a></li>
+        <li><a href="#file-format" class="toc-link" data-section="file-format">文件格式与约定</a></li>
+        <li><a href="#fields" class="toc-link" data-section="fields">字段定义</a></li>
+        <li><a href="#details-format" class="toc-link" data-section="details-format">Details 格式</a></li>
+        <li><a href="#repositories" class="toc-link" data-section="repositories">工具与技能仓库</a></li>
+        <li><a href="#example" class="toc-link" data-section="example">完整示例</a></li>
+        <li><a href="#validation" class="toc-link" data-section="validation">校验规则</a></li>
+        <li><a href="#best-practices" class="toc-link" data-section="best-practices">最佳实践</a></li>
+        <li><a href="#versioning" class="toc-link" data-section="versioning">版本管理</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
 
     <!-- Header -->
     <div class="page-header">
@@ -321,48 +371,14 @@
       <p data-lang="zh">AgentProfile 开源标准的完整参考手册 — 涵盖文件格式、字段定义、Details 结构、仓库机制、校验规则与最佳实践。</p>
     </div>
 
-    <!-- TOC -->
-    <div class="toc" data-lang="en">
-      <h3>Table of Contents</h3>
-      <ol>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#file-format">File Format &amp; Conventions</a></li>
-        <li><a href="#fields">Field Definitions</a></li>
-        <li><a href="#details-format">Details Structure</a></li>
-        <li><a href="#repositories">Tool &amp; Skill Repositories</a></li>
-        <li><a href="#constructor">Agent Constructor</a></li>
-        <li><a href="#example">Complete Example</a></li>
-        <li><a href="#validation">Validation Rules</a></li>
-        <li><a href="#best-practices">Best Practices</a></li>
-        <li><a href="#versioning">Versioning</a></li>
-      </ol>
-    </div>
-    <div class="toc" data-lang="zh">
-      <h3>目录</h3>
-      <ol>
-        <li><a href="#overview">概述</a></li>
-        <li><a href="#file-format">文件格式与约定</a></li>
-        <li><a href="#fields">字段定义</a></li>
-        <li><a href="#details-format">Details 结构</a></li>
-        <li><a href="#repositories">工具仓库与技能仓库</a></li>
-        <li><a href="#constructor">Agent 构造器</a></li>
-        <li><a href="#example">完整示例</a></li>
-        <li><a href="#validation">校验规则</a></li>
-        <li><a href="#best-practices">最佳实践</a></li>
-        <li><a href="#versioning">版本管理</a></li>
-      </ol>
-    </div>
-
     <!-- 1. Overview -->
     <div class="spec-section" id="overview">
       <h2 data-lang="en">1. <span>Overview</span></h2>
       <h2 data-lang="zh">1. <span>概述</span></h2>
-      <p data-lang="en">AgentProfile is a JSON-based open standard for defining AI agents. Each profile is a self-contained document that fully describes an agent's identity, behavior, capabilities, and resources. The core principle is simple:</p>
-      <p data-lang="zh">AgentProfile 是一个基于 JSON 的开放标准，用于定义 AI Agent。每个 Profile 是一个自包含的文档，完整描述了 Agent 的身份、行为、能力和资源。核心理念很简单：</p>
-      <p data-lang="en"><strong>One sentence in, one complete agent out.</strong></p>
-      <p data-lang="zh"><strong>一句话输入，一个完整 Agent 输出。</strong></p>
-      <p data-lang="en">A user provides a single natural language instruction. The Agent Constructor analyzes it and produces a structured AgentProfile document containing everything needed to instantiate a working agent.</p>
-      <p data-lang="zh">用户提供一句自然语言指令，Agent 构造器分析指令并生成一份结构化的 AgentProfile 文档，其中包含创建可用 Agent 所需的一切。</p>
+      <p data-lang="en">AgentProfile is a JSON-based open standard for defining AI agents. Each profile is a self-contained document that fully describes an agent's identity, behavior, capabilities, and resources.</p>
+      <p data-lang="zh">AgentProfile 是一个基于 JSON 的开放标准，用于定义 AI Agent。每个 Profile 是一个自包含的文档，完整描述了 Agent 的身份、行为、能力和资源。</p>
+      <p data-lang="en">The specification defines a unified format so that agent profiles can be created, shared, validated, and consumed by any compatible runtime or tool.</p>
+      <p data-lang="zh">本规范定义了一种统一格式，使得 Agent Profile 可以被任何兼容的运行时或工具创建、共享、校验和消费。</p>
     </div>
 
     <!-- 2. File Format -->
@@ -448,16 +464,16 @@
           <span class="fd-type">string</span>
           <span class="fd-req required">Required</span>
         </div>
-        <p data-lang="en">A Markdown-formatted string containing the agent's complete behavioral specification. This is the most important field — it defines <em>how</em> the agent thinks and acts. Must follow the <a href="#details-format" style="color:var(--primary-light)">Details Structure</a>.</p>
-        <p data-lang="zh">Markdown 格式的字符串，包含 Agent 的完整行为规范。这是最重要的字段 — 它定义了 Agent <em>如何</em>思考和行动。必须遵循 <a href="#details-format" style="color:var(--primary-light)">Details 结构</a>。</p>
+        <p data-lang="en">A Markdown-formatted string containing the agent's complete behavioral specification. This is the most important field — it defines <em>how</em> the agent thinks and acts. See <a href="#details-format" style="color:var(--primary-light)">Details Format</a> for recommended patterns.</p>
+        <p data-lang="zh">Markdown 格式的字符串，包含 Agent 的完整行为规范。这是最重要的字段 — 它定义了 Agent <em>如何</em>思考和行动。参见 <a href="#details-format" style="color:var(--primary-light)">Details 格式</a>了解推荐的编写模式。</p>
         <ul class="fd-rules" data-lang="en">
-          <li>Must contain four sections: Role, Core Dimensions, Standards, Output Format</li>
-          <li>Use standard Markdown syntax (headings, tables, lists)</li>
+          <li><strong>Must</strong> use Markdown syntax (headings, tables, lists, etc.)</li>
+          <li>Section structure is flexible — organize freely to suit the agent's domain</li>
           <li>Newlines in JSON are encoded as <code>\n</code></li>
         </ul>
         <ul class="fd-rules" data-lang="zh">
-          <li>必须包含四个部分：角色定位、核心维度、标准规范、输出格式</li>
-          <li>使用标准 Markdown 语法（标题、表格、列表）</li>
+          <li><strong>必须</strong>使用 Markdown 语法（标题、表格、列表等）</li>
+          <li>章节结构灵活 — 可根据 Agent 的领域自由组织</li>
           <li>JSON 中的换行符编码为 <code>\n</code></li>
         </ul>
       </div>
@@ -512,22 +528,34 @@
           <span class="fd-type">string[]</span>
           <span class="fd-req optional">Optional</span>
         </div>
-        <p data-lang="en">An array of sub-agent names that this agent can delegate tasks to. Enables multi-agent collaboration patterns where a primary agent orchestrates specialized sub-agents.</p>
-        <p data-lang="zh">此 Agent 可以委派任务的子 Agent 名称数组。支持多 Agent 协作模式，由主 Agent 编排专业化的子 Agent。</p>
+        <p data-lang="en">An array of sub-agent names that this agent can delegate tasks to. Each entry references the <code>name</code> of another AgentProfile — sub-agents are themselves full AgentProfile documents. This enables multi-agent collaboration where a primary agent orchestrates specialized sub-agents for different stages of a workflow.</p>
+        <p data-lang="zh">此 Agent 可以委派任务的子 Agent 名称数组。每个条目引用另一个 AgentProfile 的 <code>name</code> — 子 Agent 本身也是完整的 AgentProfile 文档。这使得主 Agent 可以编排专业化的子 Agent，实现多 Agent 协作，将工作流拆分为不同阶段分别处理。</p>
+        <ul class="fd-rules" data-lang="en">
+          <li>Each entry must match the <code>name</code> of an existing AgentProfile</li>
+          <li>Sub-agents have their own tools, skills, and behavioral specs</li>
+          <li>The primary agent decides when and how to delegate tasks to sub-agents</li>
+          <li>Empty array <code>[]</code> means the agent works independently</li>
+        </ul>
+        <ul class="fd-rules" data-lang="zh">
+          <li>每个条目必须匹配一个已有 AgentProfile 的 <code>name</code></li>
+          <li>子 Agent 拥有自己的工具、技能和行为规范</li>
+          <li>主 Agent 决定何时以及如何将任务委派给子 Agent</li>
+          <li>空数组 <code>[]</code> 表示 Agent 独立工作</li>
+        </ul>
       </div>
     </div>
 
-    <!-- 4. Details Structure -->
+    <!-- 4. Details Format -->
     <div class="spec-section" id="details-format">
-      <h2 data-lang="en">4. Details <span>Structure</span></h2>
-      <h2 data-lang="zh">4. Details <span>结构</span></h2>
-      <p data-lang="en">The <code>details</code> field is the behavioral core of an AgentProfile. It must be a Markdown string containing exactly four sections, each as a level-2 heading (<code>##</code>).</p>
-      <p data-lang="zh"><code>details</code> 字段是 AgentProfile 的行为核心。它必须是包含四个部分的 Markdown 字符串，每个部分使用二级标题（<code>##</code>）。</p>
+      <h2 data-lang="en">4. Details <span>Format</span></h2>
+      <h2 data-lang="zh">4. Details <span>格式</span></h2>
+      <p data-lang="en">The <code>details</code> field <strong>must</strong> be a valid Markdown string. The section structure is flexible — you can organize the content freely to match your agent's domain. Below are some commonly used section patterns as reference.</p>
+      <p data-lang="zh"><code>details</code> 字段<strong>必须</strong>是有效的 Markdown 字符串。章节结构不做限制 — 可以根据 Agent 的领域自由组织内容。以下是一些常用的章节模式供参考。</p>
 
-      <!-- Section 1: Role -->
+      <!-- Role pattern -->
       <div class="section-detail">
-        <h4 data-lang="en">Section 1: Role</h4>
-        <h4 data-lang="zh">第一部分：角色定位</h4>
+        <h4 data-lang="en">Role Definition</h4>
+        <h4 data-lang="zh">角色定位</h4>
         <p data-lang="en">Defines <em>who</em> the agent is. Covers identity, domain expertise, communication style, and guiding principles.</p>
         <p data-lang="zh">定义 Agent <em>是谁</em>。涵盖身份、领域专长、沟通风格和指导原则。</p>
         <div class="code-block">
@@ -544,10 +572,10 @@ over [trade-off].</pre>
         <p data-lang="zh"><strong>应包含：</strong>领域范围、人设语气（正式/随意/鼓励式）、核心方法论、约束与边界。</p>
       </div>
 
-      <!-- Section 2: Core Dimensions -->
+      <!-- Core Dimensions pattern -->
       <div class="section-detail dim">
-        <h4 data-lang="en">Section 2: Core Dimensions</h4>
-        <h4 data-lang="zh">第二部分：核心维度</h4>
+        <h4 data-lang="en">Core Dimensions</h4>
+        <h4 data-lang="zh">核心维度</h4>
         <p data-lang="en">Defines <em>what</em> the agent focuses on. A structured breakdown of the agent's attention areas. Use tables for multi-dimensional analysis or lists for sequential focus areas.</p>
         <p data-lang="zh">定义 Agent <em>关注什么</em>。Agent 注意力领域的结构化分解。使用表格进行多维分析，或使用列表进行顺序关注点。</p>
         <div class="code-block">
@@ -564,10 +592,10 @@ over [trade-off].</pre>
         <p data-lang="zh"><strong>应包含：</strong>3-8 个维度，每个维度有具体的关注要点。可选添加"常见陷阱"或"警告"列。</p>
       </div>
 
-      <!-- Section 3: Standards -->
+      <!-- Standards pattern -->
       <div class="section-detail std">
-        <h4 data-lang="en">Section 3: Standards</h4>
-        <h4 data-lang="zh">第三部分：标准规范</h4>
+        <h4 data-lang="en">Standards &amp; Criteria</h4>
+        <h4 data-lang="zh">标准规范</h4>
         <p data-lang="en">Defines the <em>quality bar</em>. References to industry standards, evaluation criteria, severity levels, and feedback methodology.</p>
         <p data-lang="zh">定义<em>质量标准</em>。引用行业标准、评价标准、严重等级和反馈方法。</p>
         <div class="code-block">
@@ -583,10 +611,10 @@ over [trade-off].</pre>
         <p data-lang="zh"><strong>应包含：</strong>参考标准、严重性分类、反馈语气要求、质量阈值。</p>
       </div>
 
-      <!-- Section 4: Output Format -->
+      <!-- Output Format pattern -->
       <div class="section-detail out">
-        <h4 data-lang="en">Section 4: Output Format</h4>
-        <h4 data-lang="zh">第四部分：输出格式</h4>
+        <h4 data-lang="en">Output Format</h4>
+        <h4 data-lang="zh">输出格式</h4>
         <p data-lang="en">Defines <em>how</em> the agent structures its responses. A numbered list of response sections that the agent should follow consistently.</p>
         <p data-lang="zh">定义 Agent <em>如何</em>组织其响应。Agent 应一致遵循的响应结构编号列表。</p>
         <div class="code-block">
@@ -631,32 +659,12 @@ over [trade-off].</pre>
       </div>
     </div>
 
-    <!-- 6. Agent Constructor -->
-    <div class="spec-section" id="constructor">
-      <h2 data-lang="en">6. Agent <span>Constructor</span></h2>
-      <h2 data-lang="zh">6. Agent <span>构造器</span></h2>
-      <p data-lang="en">The Agent Constructor is the engine that transforms a one-sentence instruction into a complete AgentProfile. It performs three sequential steps:</p>
-      <p data-lang="zh">Agent 构造器是将一句话指令转化为完整 AgentProfile 的引擎。它执行三个顺序步骤：</p>
-      <ol data-lang="en">
-        <li><strong>Generate Profile</strong> — Analyze the instruction and produce <code>name</code>, <code>description</code>, and <code>details</code> fields with a complete four-section behavioral specification.</li>
-        <li><strong>Match Tools</strong> — Scan the tool repository, evaluate relevance to the described scenario, and populate the <code>tools</code> array with matching identifiers.</li>
-        <li><strong>Match Skills</strong> — Scan the skill repository, evaluate relevance, and populate the <code>skills</code> array with matching module names.</li>
-      </ol>
-      <ol data-lang="zh">
-        <li><strong>生成 Profile</strong> — 分析指令并生成 <code>name</code>、<code>description</code> 和 <code>details</code> 字段，包含完整的四段式行为规范。</li>
-        <li><strong>匹配工具</strong> — 扫描工具仓库，评估与描述场景的相关性，将匹配的标识符填入 <code>tools</code> 数组。</li>
-        <li><strong>匹配技能</strong> — 扫描技能仓库，评估相关性，将匹配的模块名填入 <code>skills</code> 数组。</li>
-      </ol>
-      <p data-lang="en">The constructor also fills default values: <code>agent_template</code> is set to <code>"default"</code>, and <code>subagents</code> is set to <code>[]</code>.</p>
-      <p data-lang="zh">构造器还会填充默认值：<code>agent_template</code> 设为 <code>"default"</code>，<code>subagents</code> 设为 <code>[]</code>。</p>
-    </div>
-
-    <!-- 7. Complete Example -->
+    <!-- 6. Complete Example -->
     <div class="spec-section" id="example">
-      <h2 data-lang="en">7. Complete <span>Example</span></h2>
-      <h2 data-lang="zh">7. 完整<span>示例</span></h2>
-      <p data-lang="en">Input instruction: <code>"A Python code review assistant"</code></p>
-      <p data-lang="zh">输入指令：<code>"Python 代码审查助手"</code></p>
+      <h2 data-lang="en">6. Complete <span>Example</span></h2>
+      <h2 data-lang="zh">6. 完整<span>示例</span></h2>
+      <p data-lang="en">Below is a complete AgentProfile for a Python code review assistant:</p>
+      <p data-lang="zh">以下是一个 Python 代码审查助手的完整 AgentProfile：</p>
 
       <div class="code-block">
         <div class="code-block-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>python-code-review.json</div>
@@ -674,8 +682,8 @@ over [trade-off].</pre>
 
     <!-- 8. Validation Rules -->
     <div class="spec-section" id="validation">
-      <h2 data-lang="en">8. Validation <span>Rules</span></h2>
-      <h2 data-lang="zh">8. 校验<span>规则</span></h2>
+      <h2 data-lang="en">7. Validation <span>Rules</span></h2>
+      <h2 data-lang="zh">7. 校验<span>规则</span></h2>
       <p data-lang="en">A valid AgentProfile document must satisfy all of the following:</p>
       <p data-lang="zh">有效的 AgentProfile 文档必须满足以下所有条件：</p>
       <table class="spec-table" data-lang="en">
@@ -684,7 +692,7 @@ over [trade-off].</pre>
           <tr><td>R1</td><td>Root must be a JSON object</td></tr>
           <tr><td>R2</td><td><code>name</code> must be a non-empty string</td></tr>
           <tr><td>R3</td><td><code>description</code> must be a non-empty string</td></tr>
-          <tr><td>R4</td><td><code>details</code> must be a non-empty string containing <code>##</code> headings for all four sections</td></tr>
+          <tr><td>R4</td><td><code>details</code> must be a non-empty Markdown-formatted string</td></tr>
           <tr><td>R5</td><td>If present, <code>agent_template</code> must be a non-empty string</td></tr>
           <tr><td>R6</td><td>If present, <code>tools</code> must be an array of strings</td></tr>
           <tr><td>R7</td><td>If present, <code>skills</code> must be an array of strings</td></tr>
@@ -698,7 +706,7 @@ over [trade-off].</pre>
           <tr><td>R1</td><td>根必须是 JSON 对象</td></tr>
           <tr><td>R2</td><td><code>name</code> 必须是非空字符串</td></tr>
           <tr><td>R3</td><td><code>description</code> 必须是非空字符串</td></tr>
-          <tr><td>R4</td><td><code>details</code> 必须是非空字符串，包含四个部分的 <code>##</code> 标题</td></tr>
+          <tr><td>R4</td><td><code>details</code> 必须是非空的 Markdown 格式字符串</td></tr>
           <tr><td>R5</td><td>如存在，<code>agent_template</code> 必须是非空字符串</td></tr>
           <tr><td>R6</td><td>如存在，<code>tools</code> 必须是字符串数组</td></tr>
           <tr><td>R7</td><td>如存在，<code>skills</code> 必须是字符串数组</td></tr>
@@ -710,8 +718,8 @@ over [trade-off].</pre>
 
     <!-- 9. Best Practices -->
     <div class="spec-section" id="best-practices">
-      <h2 data-lang="en">9. Best <span>Practices</span></h2>
-      <h2 data-lang="zh">9. 最佳<span>实践</span></h2>
+      <h2 data-lang="en">8. Best <span>Practices</span></h2>
+      <h2 data-lang="zh">8. 最佳<span>实践</span></h2>
 
       <div class="tip-box do" data-lang="en">
         <div class="tip-label">Do</div>
@@ -724,11 +732,11 @@ over [trade-off].</pre>
 
       <div class="tip-box do" data-lang="en">
         <div class="tip-label">Do</div>
-        <p>Use tables in Core Dimensions for multi-faceted analysis. Tables make the agent's focus areas scannable and unambiguous.</p>
+        <p>Use Markdown tables and lists to make the agent's focus areas and behaviors structured, scannable, and unambiguous.</p>
       </div>
       <div class="tip-box do" data-lang="zh">
         <div class="tip-label">推荐</div>
-        <p>在核心维度中使用表格进行多维分析。表格使 Agent 的关注领域一目了然且无歧义。</p>
+        <p>使用 Markdown 表格和列表使 Agent 的关注领域和行为结构化、一目了然且无歧义。</p>
       </div>
 
       <div class="tip-box do" data-lang="en">
@@ -751,18 +759,18 @@ over [trade-off].</pre>
 
       <div class="tip-box dont" data-lang="en">
         <div class="tip-label">Avoid</div>
-        <p>Don't mix concerns across sections. Role defines identity, Dimensions define focus, Standards define quality, Output defines structure. Keep them separate.</p>
+        <p>Don't use plain text for details. Always use Markdown with headings, lists, and tables to keep the specification structured and machine-readable.</p>
       </div>
       <div class="tip-box dont" data-lang="zh">
         <div class="tip-label">避免</div>
-        <p>不要跨部分混淆关注点。角色定义身份，维度定义关注点，标准定义质量，输出定义结构。保持各部分独立。</p>
+        <p>不要使用纯文本编写 details。始终使用 Markdown 标题、列表和表格来保持规范的结构化和机器可读性。</p>
       </div>
     </div>
 
     <!-- 10. Versioning -->
     <div class="spec-section" id="versioning">
-      <h2 data-lang="en">10. <span>Versioning</span></h2>
-      <h2 data-lang="zh">10. <span>版本管理</span></h2>
+      <h2 data-lang="en">9. <span>Versioning</span></h2>
+      <h2 data-lang="zh">9. <span>版本管理</span></h2>
       <p data-lang="en">The AgentProfile specification follows <strong>Semantic Versioning</strong>. The current version is <strong>v1.0</strong>.</p>
       <p data-lang="zh">AgentProfile 规范遵循<strong>语义化版本号</strong>。当前版本为 <strong>v1.0</strong>。</p>
       <ul data-lang="en">
@@ -777,7 +785,8 @@ over [trade-off].</pre>
       </ul>
     </div>
 
-  </div>
+    </div><!-- /main-content -->
+  </div><!-- /layout -->
 
   <footer>
     <div class="container">
@@ -793,11 +802,45 @@ over [trade-off].</pre>
       document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
       localStorage.setItem('agent-profile-lang', lang);
     }
+
+    // Section switching
+    function showSection(sectionId) {
+      var sections = document.querySelectorAll('.spec-section');
+      sections.forEach(function(s) {
+        s.style.display = s.id === sectionId ? '' : 'none';
+      });
+      // Update active TOC link
+      document.querySelectorAll('.toc-link').forEach(function(link) {
+        link.classList.toggle('active', link.getAttribute('data-section') === sectionId);
+      });
+      // Scroll main content to top
+      document.querySelector('.main-content').scrollTop = 0;
+      window.scrollTo(0, 0);
+    }
+
+    // Bind TOC clicks
+    document.querySelectorAll('.toc-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var sectionId = this.getAttribute('data-section');
+        showSection(sectionId);
+        history.replaceState(null, '', '#' + sectionId);
+      });
+    });
+
+    // Init: show section from hash or default to first
     (function() {
       var saved = localStorage.getItem('agent-profile-lang');
-      if (saved) { setLang(saved); return; }
-      var browserLang = navigator.language || navigator.userLanguage || '';
-      if (browserLang.startsWith('zh')) setLang('zh');
+      if (saved) { setLang(saved); }
+      else {
+        var browserLang = navigator.language || navigator.userLanguage || '';
+        if (browserLang.startsWith('zh')) setLang('zh');
+      }
+
+      var hash = window.location.hash.replace('#', '');
+      var validIds = ['overview','file-format','fields','details-format','repositories','example','validation','best-practices','versioning'];
+      var target = validIds.indexOf(hash) !== -1 ? hash : 'overview';
+      showSection(target);
     })();
   </script>
 

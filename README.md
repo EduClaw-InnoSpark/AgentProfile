@@ -67,7 +67,7 @@ An AgentProfile is a JSON file with the following structure:
   // Optional: skill directory names to load
   "skills": ["python-lint", "security-scan"],
 
-  // Optional: sub-agent names for delegation
+  // Optional: sub-agent names for delegation (each references another AgentProfile)
   "subagents": []
 }
 ```
@@ -82,7 +82,7 @@ An AgentProfile is a JSON file with the following structure:
 | `agent_template` | `string` | No | Template type, defaults to `"default"` |
 | `tools` | `string[]` | No | List of tool identifiers from the tool repository |
 | `skills` | `string[]` | No | Skill modules from the skill repository |
-| `subagents` | `string[]` | No | Sub-agents for task delegation |
+| `subagents` | `string[]` | No | Sub-agent names for task delegation; each references another AgentProfile's `name` |
 
 ### Details Format
 
