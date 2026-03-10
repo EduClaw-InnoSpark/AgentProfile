@@ -325,13 +325,13 @@
       <h1>AgentProfile</h1>
       <p class="slogan" data-lang="en">Create Agent with One Sentence.</p>
       <p class="slogan" data-lang="zh">一句话创建 Agent。</p>
-      <p class="tagline" data-lang="en">An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and let LLM generate a complete, structured AgentProfile.</p>
-      <p class="tagline" data-lang="zh">一个用于定义 AI Agent 配置的开源规范。用一句话描述你的需求，让 LLM 自动生成完整、结构化的 AgentProfile。</p>
+      <p class="tagline" data-lang="en">An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and the Agent Generator will produce a complete, structured AgentProfile.</p>
+      <p class="tagline" data-lang="zh">一个用于定义 AI Agent 配置的开源规范。用一句话描述你的需求，Agent Generator 将自动生成完整、结构化的 AgentProfile。</p>
 
       <div class="flow-arrow" data-lang="en">
         <span class="flow-chip highlight">"A code review assistant"</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-chip">LLM Generator</span>
+        <span class="flow-chip">Agent Generator</span>
         <span class="arrow">&rarr;</span>
         <span class="flow-chip accent">AgentProfile JSON</span>
         <span class="arrow">&rarr;</span>
@@ -340,7 +340,7 @@
       <div class="flow-arrow" data-lang="zh">
         <span class="flow-chip highlight">"Python 代码审查助手"</span>
         <span class="arrow">&rarr;</span>
-        <span class="flow-chip">LLM 生成器</span>
+        <span class="flow-chip">Agent Generator</span>
         <span class="arrow">&rarr;</span>
         <span class="flow-chip accent">AgentProfile JSON</span>
         <span class="arrow">&rarr;</span>
@@ -370,12 +370,12 @@
         <div class="step">
           <div class="step-num">2</div>
           <h3>Generate</h3>
-          <p>LLM analyzes the scenario and generates a structured AgentProfile JSON</p>
+          <p>Agent Generator produces name, description, and detailed behavioral specifications</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <h3>Match Skills</h3>
-          <p>Automatically select relevant skills from the skill library</p>
+          <h3>Match</h3>
+          <p>Fetch matching tools and skills from tool repository and skill repository</p>
         </div>
         <div class="step">
           <div class="step-num">4</div>
@@ -392,12 +392,12 @@
         <div class="step">
           <div class="step-num">2</div>
           <h3>生成</h3>
-          <p>LLM 分析场景，生成结构化的 AgentProfile JSON</p>
+          <p>Agent Generator 生成名称、描述和详细的行为规范</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <h3>匹配技能</h3>
-          <p>从技能库中自动选择匹配的技能模块</p>
+          <h3>匹配</h3>
+          <p>从工具仓库和技能仓库中获取适配的工具与技能</p>
         </div>
         <div class="step">
           <div class="step-num">4</div>
@@ -463,8 +463,8 @@
           <tr><td>description</td><td>string</td><td><span class="required">REQUIRED</span></td><td>One-sentence summary of the agent's purpose</td></tr>
           <tr><td>details</td><td>string</td><td><span class="required">REQUIRED</span></td><td>Markdown-formatted behavioral specification</td></tr>
           <tr><td>agent_template</td><td>string</td><td><span class="optional">optional</span></td><td>Template type, defaults to "default"</td></tr>
-          <tr><td>tools</td><td>string[]</td><td><span class="optional">optional</span></td><td>Tool identifiers the agent can use</td></tr>
-          <tr><td>skills</td><td>string[]</td><td><span class="optional">optional</span></td><td>Skill modules from the skill library</td></tr>
+          <tr><td>tools</td><td>string[]</td><td><span class="optional">optional</span></td><td>Tool identifiers from the tool repository</td></tr>
+          <tr><td>skills</td><td>string[]</td><td><span class="optional">optional</span></td><td>Skill modules from the skill repository</td></tr>
           <tr><td>subagents</td><td>string[]</td><td><span class="optional">optional</span></td><td>Sub-agents for task delegation</td></tr>
         </tbody>
       </table>
@@ -476,8 +476,8 @@
           <tr><td>description</td><td>string</td><td><span class="required">必填</span></td><td>一句话概括 Agent 的定位</td></tr>
           <tr><td>details</td><td>string</td><td><span class="required">必填</span></td><td>Markdown 格式的行为规范</td></tr>
           <tr><td>agent_template</td><td>string</td><td><span class="optional">可选</span></td><td>模板类型，默认 "default"</td></tr>
-          <tr><td>tools</td><td>string[]</td><td><span class="optional">可选</span></td><td>Agent 可使用的工具标识符</td></tr>
-          <tr><td>skills</td><td>string[]</td><td><span class="optional">可选</span></td><td>从技能库加载的技能模块</td></tr>
+          <tr><td>tools</td><td>string[]</td><td><span class="optional">可选</span></td><td>从工具仓库中匹配的工具标识符</td></tr>
+          <tr><td>skills</td><td>string[]</td><td><span class="optional">可选</span></td><td>从技能仓库中匹配的技能模块</td></tr>
           <tr><td>subagents</td><td>string[]</td><td><span class="optional">可选</span></td><td>用于任务委派的子 Agent</td></tr>
         </tbody>
       </table>

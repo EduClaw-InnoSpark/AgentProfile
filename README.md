@@ -2,7 +2,7 @@
 
 > **Create Agent with One Sentence.**
 >
-> An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and let LLM generate a complete, structured AgentProfile.
+> An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and the Agent Generator will produce a complete, structured AgentProfile.
 
 [中文版](./README_zh.md)
 
@@ -24,10 +24,10 @@ AgentProfile is a JSON-based open standard for describing AI agents. It provides
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────┐
-│                   LLM Profile Generator                  │
-│  • Analyze the scenario                                  │
-│  • Match relevant skills from skill library              │
-│  • Generate structured profile                           │
+│                     Agent Generator                      │
+│  • Generate name, description and details                │
+│  • Match relevant tools from tool repository             │
+│  • Match relevant skills from skill repository           │
 └────────────────────────┬────────────────────────────────┘
                          │
                          ▼
@@ -80,8 +80,8 @@ An AgentProfile is a JSON file with the following structure:
 | `description` | `string` | Yes | One-sentence summary of the agent's role and capabilities |
 | `details` | `string` | Yes | Markdown-formatted behavioral specification (see below) |
 | `agent_template` | `string` | No | Template type, defaults to `"default"` |
-| `tools` | `string[]` | No | List of tool identifiers the agent can use |
-| `skills` | `string[]` | No | Skill modules to load from the skill library |
+| `tools` | `string[]` | No | List of tool identifiers from the tool repository |
+| `skills` | `string[]` | No | Skill modules from the skill repository |
 | `subagents` | `string[]` | No | Sub-agents for task delegation |
 
 ### Details Format
@@ -146,11 +146,12 @@ Describe your scenario in one sentence:
 A customer support agent that handles billing inquiries
 ```
 
-The system will automatically generate a complete AgentProfile including:
+The Agent Generator will automatically produce a complete AgentProfile including:
 - An appropriate agent name
 - A clear description
 - Detailed behavioral specifications
-- Matched skills from the skill library
+- Matched tools from the tool repository
+- Matched skills from the skill repository
 
 ## Examples
 
