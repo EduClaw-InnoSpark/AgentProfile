@@ -58,10 +58,9 @@
       color: var(--text);
     }
 
-    /* i18n: hide inactive lang */
-    [data-lang="zh"] { display: none; }
-    body.zh [data-lang="zh"] { display: revert; }
-    body.zh [data-lang="en"] { display: none; }
+    /* i18n: hide inactive lang — never use revert (breaks flex/grid/table) */
+    body:not(.zh) [data-lang="zh"] { display: none !important; }
+    body.zh [data-lang="en"] { display: none !important; }
 
     /* Hero */
     .hero { text-align: center; padding: 80px 0 60px; }
