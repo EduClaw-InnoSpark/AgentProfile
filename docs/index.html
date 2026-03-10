@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentProfile — Create Agent with One Sentence</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-dark: #4f46e5;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-code: #0d1117;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #22d3ee;
+      --green: #34d399;
+      --orange: #fb923c;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* Language toggle */
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .lang-toggle button.active {
+      background: var(--primary);
+      color: white;
+    }
+    .lang-toggle button:hover:not(.active) {
+      color: var(--text);
+    }
+
+    /* i18n: hide inactive lang */
+    [data-lang="zh"] { display: none; }
+    body.zh [data-lang="zh"] { display: revert; }
+    body.zh [data-lang="en"] { display: none; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 80px 0 60px; }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .hero .slogan {
+      font-size: 1.35rem;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .hero .tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .flow-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .flow-chip.highlight {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary-light);
+    }
+    .flow-chip.accent {
+      border-color: var(--accent);
+      background: rgba(34, 211, 238, 0.08);
+      color: var(--accent);
+    }
+    .arrow { color: var(--text-muted); font-size: 1.2rem; }
+    .badge-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      display: inline-block;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .badge:hover { border-color: var(--primary); color: var(--primary-light); }
+
+    /* Section */
+    section { padding: 48px 0; }
+    section h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 24px; }
+    section h2 span { color: var(--primary-light); }
+    section p { color: var(--text-muted); margin-bottom: 16px; }
+
+    /* Workflow */
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .step h3 { font-size: 1rem; margin-bottom: 8px; }
+    .step p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+
+    /* Schema */
+    .schema-block {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .schema-header {
+      background: var(--bg-card);
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .schema-header .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .schema-header .dot.red { background: #ef4444; }
+    .schema-header .dot.yellow { background: #eab308; }
+    .schema-header .dot.green { background: #22c55e; }
+    pre {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .json-key { color: #7dd3fc; }
+    .json-str { color: #86efac; }
+    .json-comment { color: #64748b; font-style: italic; }
+    .json-bracket { color: #94a3b8; }
+
+    /* Field Table */
+    .field-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
+    .field-table th {
+      background: var(--bg-card);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+    }
+    .field-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .field-table td:first-child {
+      font-family: 'SF Mono', monospace;
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+    .field-table .required { color: var(--green); font-weight: 600; font-size: 0.75rem; }
+    .field-table .optional { color: var(--text-muted); font-size: 0.75rem; }
+
+    /* Details */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 640px) { .details-grid { grid-template-columns: 1fr; } }
+    .detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .detail-card h4 { font-size: 0.95rem; margin-bottom: 8px; }
+    .detail-card p { font-size: 0.85rem; margin: 0; }
+    .detail-card .label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .label-role { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
+    .label-dim { background: rgba(34, 211, 238, 0.12); color: var(--accent); }
+    .label-std { background: rgba(52, 211, 153, 0.12); color: var(--green); }
+    .label-out { background: rgba(251, 146, 60, 0.12); color: var(--orange); }
+
+    /* Example */
+    .example-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 16px;
+    }
+    .example-input { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .example-prompt {
+      flex: 1;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+    .example-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .example-fields { display: grid; gap: 10px; }
+    .example-field { background: var(--bg); border-radius: 6px; padding: 12px 16px; }
+    .example-field .key { font-family: monospace; font-size: 0.8rem; color: var(--accent); margin-bottom: 4px; }
+    .example-field .val { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* CTA */
+    .cta { text-align: center; padding: 60px 0 80px; }
+    .cta h2 { margin-bottom: 16px; }
+    .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary-light); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--primary-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>AgentProfile</h1>
+      <p class="slogan" data-lang="en">Create Agent with One Sentence.</p>
+      <p class="slogan" data-lang="zh">一句话创建 Agent。</p>
+      <p class="tagline" data-lang="en">An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and let LLM generate a complete, structured AgentProfile.</p>
+      <p class="tagline" data-lang="zh">一个用于定义 AI Agent 配置的开源规范。用一句话描述你的需求，让 LLM 自动生成完整、结构化的 AgentProfile。</p>
+
+      <div class="flow-arrow" data-lang="en">
+        <span class="flow-chip highlight">"A code review assistant"</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip">LLM Generator</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip accent">AgentProfile JSON</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip">Ready Agent</span>
+      </div>
+      <div class="flow-arrow" data-lang="zh">
+        <span class="flow-chip highlight">"Python 代码审查助手"</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip">LLM 生成器</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip accent">AgentProfile JSON</span>
+        <span class="arrow">&rarr;</span>
+        <span class="flow-chip">可用 Agent</span>
+      </div>
+
+      <div class="badge-row">
+        <a class="badge" href="https://github.com/EduClaw-InnoSpark/AgentProfile">GitHub</a>
+        <span class="badge">Spec v1.0</span>
+        <span class="badge">JSON Schema</span>
+        <span class="badge">MIT License</span>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section>
+      <h2 data-lang="en">How It <span>Works</span></h2>
+      <h2 data-lang="zh">工作<span>流程</span></h2>
+      <p data-lang="en">From a single sentence to a fully functional AI agent in four steps.</p>
+      <p data-lang="zh">从一句话到一个可用的 AI Agent，只需四步。</p>
+      <div class="workflow-steps" data-lang="en">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Describe</h3>
+          <p>Write a one-sentence description of the agent you need</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Generate</h3>
+          <p>LLM analyzes the scenario and generates a structured AgentProfile JSON</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Match Skills</h3>
+          <p>Automatically select relevant skills from the skill library</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Deploy</h3>
+          <p>Profile creates a ready-to-use agent workspace</p>
+        </div>
+      </div>
+      <div class="workflow-steps" data-lang="zh">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>描述</h3>
+          <p>用一句话描述你需要的 Agent</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>生成</h3>
+          <p>LLM 分析场景，生成结构化的 AgentProfile JSON</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>匹配技能</h3>
+          <p>从技能库中自动选择匹配的技能模块</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>部署</h3>
+          <p>Profile 创建可直接使用的 Agent 工作空间</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Template -->
+    <section>
+      <h2 data-lang="en">Profile <span>Template</span></h2>
+      <h2 data-lang="zh">Profile <span>模板</span></h2>
+      <p data-lang="en">The AgentProfile JSON schema — a standardized format for AI agents.</p>
+      <p data-lang="zh">AgentProfile JSON 规范 — AI Agent 的标准化配置格式。</p>
+
+      <div class="schema-block" data-lang="en">
+        <div class="schema-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          agent-profile.json
+        </div>
+        <pre><code><span class="json-bracket">{</span>
+  <span class="json-comment">// Required fields</span>
+  <span class="json-key">"name"</span>:           <span class="json-str">"Python Code Review Assistant"</span>,
+  <span class="json-key">"description"</span>:    <span class="json-str">"An AI assistant for Python code review..."</span>,
+  <span class="json-key">"details"</span>:        <span class="json-str">"## Role\n\n...\n\n## Core Dimensions\n\n..."</span>,
+
+  <span class="json-comment">// Optional fields</span>
+  <span class="json-key">"agent_template"</span>: <span class="json-str">"default"</span>,
+  <span class="json-key">"tools"</span>:          <span class="json-bracket">[]</span>,
+  <span class="json-key">"skills"</span>:         <span class="json-bracket">[</span><span class="json-str">"python-lint"</span>, <span class="json-str">"security-scan"</span><span class="json-bracket">]</span>,
+  <span class="json-key">"subagents"</span>:      <span class="json-bracket">[]</span>
+<span class="json-bracket">}</span></code></pre>
+      </div>
+
+      <div class="schema-block" data-lang="zh">
+        <div class="schema-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          agent-profile.json
+        </div>
+        <pre><code><span class="json-bracket">{</span>
+  <span class="json-comment">// 必填字段</span>
+  <span class="json-key">"name"</span>:           <span class="json-str">"Python 代码审查助手"</span>,
+  <span class="json-key">"description"</span>:    <span class="json-str">"专注于 Python 代码审查的 AI 助手..."</span>,
+  <span class="json-key">"details"</span>:        <span class="json-str">"## 角色定位\n\n...\n\n## 核心维度\n\n..."</span>,
+
+  <span class="json-comment">// 可选字段</span>
+  <span class="json-key">"agent_template"</span>: <span class="json-str">"default"</span>,
+  <span class="json-key">"tools"</span>:          <span class="json-bracket">[]</span>,
+  <span class="json-key">"skills"</span>:         <span class="json-bracket">[</span><span class="json-str">"python-lint"</span>, <span class="json-str">"security-scan"</span><span class="json-bracket">]</span>,
+  <span class="json-key">"subagents"</span>:      <span class="json-bracket">[]</span>
+<span class="json-bracket">}</span></code></pre>
+      </div>
+
+      <table class="field-table" data-lang="en">
+        <thead><tr><th>Field</th><th>Type</th><th>Status</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td>string</td><td><span class="required">REQUIRED</span></td><td>Concise name reflecting the agent's role</td></tr>
+          <tr><td>description</td><td>string</td><td><span class="required">REQUIRED</span></td><td>One-sentence summary of the agent's purpose</td></tr>
+          <tr><td>details</td><td>string</td><td><span class="required">REQUIRED</span></td><td>Markdown-formatted behavioral specification</td></tr>
+          <tr><td>agent_template</td><td>string</td><td><span class="optional">optional</span></td><td>Template type, defaults to "default"</td></tr>
+          <tr><td>tools</td><td>string[]</td><td><span class="optional">optional</span></td><td>Tool identifiers the agent can use</td></tr>
+          <tr><td>skills</td><td>string[]</td><td><span class="optional">optional</span></td><td>Skill modules from the skill library</td></tr>
+          <tr><td>subagents</td><td>string[]</td><td><span class="optional">optional</span></td><td>Sub-agents for task delegation</td></tr>
+        </tbody>
+      </table>
+
+      <table class="field-table" data-lang="zh">
+        <thead><tr><th>字段</th><th>类型</th><th>状态</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td>string</td><td><span class="required">必填</span></td><td>简洁的名称，反映 Agent 的角色</td></tr>
+          <tr><td>description</td><td>string</td><td><span class="required">必填</span></td><td>一句话概括 Agent 的定位</td></tr>
+          <tr><td>details</td><td>string</td><td><span class="required">必填</span></td><td>Markdown 格式的行为规范</td></tr>
+          <tr><td>agent_template</td><td>string</td><td><span class="optional">可选</span></td><td>模板类型，默认 "default"</td></tr>
+          <tr><td>tools</td><td>string[]</td><td><span class="optional">可选</span></td><td>Agent 可使用的工具标识符</td></tr>
+          <tr><td>skills</td><td>string[]</td><td><span class="optional">可选</span></td><td>从技能库加载的技能模块</td></tr>
+          <tr><td>subagents</td><td>string[]</td><td><span class="optional">可选</span></td><td>用于任务委派的子 Agent</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Details Format -->
+    <section>
+      <h2 data-lang="en">Details <span>Format</span></h2>
+      <h2 data-lang="zh">Details <span>格式</span></h2>
+      <p data-lang="en">The <code>details</code> field uses Markdown with four sections that define the agent's behavior.</p>
+      <p data-lang="zh"><code>details</code> 字段使用 Markdown 编写，包含四个部分来定义 Agent 的行为。</p>
+
+      <div class="details-grid" data-lang="en">
+        <div class="detail-card">
+          <span class="label label-role">Section 1</span>
+          <h4>Role</h4>
+          <p>Define the agent's identity, tone, and behavioral philosophy. Specify the domain, function, and core approach.</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-dim">Section 2</span>
+          <h4>Core Dimensions</h4>
+          <p>Structured breakdown of focus areas using tables or lists. Each dimension includes specific focus points.</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-std">Section 3</span>
+          <h4>Standards</h4>
+          <p>Quality criteria, industry standards, evaluation methods, and feedback methodology.</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-out">Section 4</span>
+          <h4>Output Format</h4>
+          <p>Define the structured response format: how the agent should organize and present its output.</p>
+        </div>
+      </div>
+
+      <div class="details-grid" data-lang="zh">
+        <div class="detail-card">
+          <span class="label label-role">第一部分</span>
+          <h4>角色定位</h4>
+          <p>定义 Agent 的身份、语气和行为理念。指定领域、功能和核心方法。</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-dim">第二部分</span>
+          <h4>核心维度</h4>
+          <p>使用表格或列表对关注点进行结构化分解，每个维度包含具体的关注要点。</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-std">第三部分</span>
+          <h4>标准规范</h4>
+          <p>质量标准、行业规范、评价方法和反馈方式。</p>
+        </div>
+        <div class="detail-card">
+          <span class="label label-out">第四部分</span>
+          <h4>输出格式</h4>
+          <p>定义结构化的响应格式：Agent 应如何组织和呈现其输出内容。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Example -->
+    <section>
+      <h2 data-lang="en">Live <span>Example</span></h2>
+      <h2 data-lang="zh">实际<span>示例</span></h2>
+
+      <div class="example-section" data-lang="en">
+        <div class="example-label">Input — One Sentence</div>
+        <div class="example-input">
+          <div class="example-prompt">A customer support agent for SaaS billing inquiries</div>
+        </div>
+        <div class="example-output">
+          <div class="example-label" style="margin-bottom:12px;">Generated Profile</div>
+          <div class="example-fields">
+            <div class="example-field">
+              <div class="key">name</div>
+              <div class="val">SaaS Billing Support Agent</div>
+            </div>
+            <div class="example-field">
+              <div class="key">description</div>
+              <div class="val">An AI assistant specialized in handling SaaS billing inquiries, providing clear explanations of charges, subscription management, and refund processing.</div>
+            </div>
+            <div class="example-field">
+              <div class="key">skills</div>
+              <div class="val">billing-faq / subscription-management / refund-processing / escalation-routing</div>
+            </div>
+            <div class="example-field">
+              <div class="key">details</div>
+              <div class="val">Role &rarr; Core Dimensions (4 areas) &rarr; Standards &rarr; Output Format (3-step structure)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-section" data-lang="zh">
+        <div class="example-label">输入 — 一句话</div>
+        <div class="example-input">
+          <div class="example-prompt">一个处理 SaaS 产品账单咨询的客户支持 Agent</div>
+        </div>
+        <div class="example-output">
+          <div class="example-label" style="margin-bottom:12px;">生成的 Profile</div>
+          <div class="example-fields">
+            <div class="example-field">
+              <div class="key">name</div>
+              <div class="val">SaaS 账单客服 Agent</div>
+            </div>
+            <div class="example-field">
+              <div class="key">description</div>
+              <div class="val">专注于 SaaS 账单咨询的 AI 助手，提供清晰的费用解释、订阅管理和退款处理服务。</div>
+            </div>
+            <div class="example-field">
+              <div class="key">skills</div>
+              <div class="val">billing-faq / subscription-management / refund-processing / escalation-routing</div>
+            </div>
+            <div class="example-field">
+              <div class="key">details</div>
+              <div class="val">角色定位 &rarr; 核心维度 (4个方向) &rarr; 标准规范 &rarr; 输出格式 (3步结构)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <h2 data-lang="en">Get <span>Started</span></h2>
+      <h2 data-lang="zh">开始<span>使用</span></h2>
+      <p data-lang="en">Define your agent in one sentence. Get a structured, ready-to-use profile.</p>
+      <p data-lang="zh">一句话定义你的 Agent，获得结构化的、即刻可用的 Profile。</p>
+      <div class="cta-buttons">
+        <a class="btn btn-primary" href="https://github.com/EduClaw-InnoSpark/AgentProfile">View on GitHub</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>AgentProfile Spec v1.0 &mdash; MIT License</p>
+    </div>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.body.classList.toggle('zh', lang === 'zh');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      localStorage.setItem('agent-profile-lang', lang);
+    }
+    // Restore saved preference or detect browser language
+    (function() {
+      var saved = localStorage.getItem('agent-profile-lang');
+      if (saved) { setLang(saved); return; }
+      var browserLang = navigator.language || navigator.userLanguage || '';
+      if (browserLang.startsWith('zh')) setLang('zh');
+    })();
+  </script>
+
+</body>
+</html>
