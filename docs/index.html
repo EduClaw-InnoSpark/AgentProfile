@@ -28,17 +28,15 @@
     }
     .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
-    /* Language toggle */
+    /* Language toggle — inside tab-nav */
     .lang-toggle {
-      position: fixed;
-      top: 20px;
-      right: 24px;
-      z-index: 100;
       display: flex;
-      background: var(--bg-card);
+      margin-left: auto;
+      background: var(--bg-code);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 6px;
       overflow: hidden;
+      flex-shrink: 0;
     }
     .lang-toggle button {
       background: none;
@@ -460,13 +458,11 @@
       <a class="tab" href="./spec.html" data-lang="en">Specification</a>
       <a class="tab" href="./spec.html" data-lang="zh">规范文档</a>
     </div>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    </div>
   </nav>
-
-  <!-- Language Toggle -->
-  <div class="lang-toggle">
-    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
-    <button id="btn-zh" onclick="setLang('zh')">中文</button>
-  </div>
 
   <div class="container">
 
