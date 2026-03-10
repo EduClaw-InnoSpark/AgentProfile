@@ -2,7 +2,7 @@
 
 > **Create Agent with One Sentence.**
 >
-> An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and the Agent Generator will produce a complete, structured AgentProfile.
+> An open-source specification for defining AI agent profiles. Describe what you want in one sentence, and the Agent Constructor will produce a complete, structured AgentProfile.
 
 [中文版](./README_zh.md)
 
@@ -24,7 +24,7 @@ AgentProfile is a JSON-based open standard for describing AI agents. It provides
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────┐
-│                     Agent Generator                      │
+│                     Agent Constructor                      │
 │  • Generate name, description and details                │
 │  • Match relevant tools from tool repository             │
 │  • Match relevant skills from skill repository           │
@@ -146,7 +146,7 @@ Describe your scenario in one sentence:
 A customer support agent that handles billing inquiries
 ```
 
-The Agent Generator will automatically produce a complete AgentProfile including:
+The Agent Constructor will automatically produce a complete AgentProfile including:
 - An appropriate agent name
 - A clear description
 - Detailed behavioral specifications
