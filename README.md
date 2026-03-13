@@ -79,14 +79,14 @@ An AgentProfile is a JSON file with the following structure:
 | `name` | `string` | Yes | Concise name reflecting the agent's role |
 | `description` | `string` | Yes | One-sentence summary of the agent's role and capabilities |
 | `details` | `string` | Yes | Markdown-formatted behavioral specification (see below) |
-| `agent_template` | `string` | No | Template type, defaults to `"default"` |
+| `agent_template` | `string` | No | Runtime template type, defaults to `"default"`. See [Compatible Runtimes](#compatible-runtimes) |
 | `tools` | `string[]` | No | List of tool identifiers from the tool repository |
 | `skills` | `string[]` | No | Skill modules from the skill repository |
 | `subagents` | `string[]` | No | Sub-agent names for task delegation; each references another AgentProfile's `name` |
 
 ### Details Format
 
-The `details` field must be a Markdown string containing these sections:
+The `details` field must be a Markdown string. The section structure is entirely flexible — organize freely to suit your agent's domain. You can also compose the content from multiple source files (e.g., `AGENTS.md`, `IDENTITY.md`, `SOUL.md`) and concatenate them into a single Markdown string. Below are some commonly used section patterns as reference:
 
 #### 1. Role
 
@@ -135,6 +135,18 @@ Define the structure of the agent's responses.
 2. **Step 2 Title**: Description
 3. **Step 3 Title**: Description
 ```
+
+## Compatible Runtimes
+
+AgentProfile is runtime-agnostic. The following runtimes are known to be compatible:
+
+| Runtime | Repository |
+|---------|------------|
+| OpenClaw | [github.com/openclaw/openclaw](https://github.com/openclaw/openclaw) |
+| OpenCode | [github.com/anomalyco/opencode](https://github.com/anomalyco/opencode) |
+| Codex | [github.com/openai/codex](https://github.com/openai/codex) |
+| Claude Code | [github.com/anthropics/claude-code](https://github.com/anthropics/claude-code) |
+| OpenBunny | [github.com/fairyshine/OpenBunny](https://github.com/fairyshine/OpenBunny) |
 
 ## Quick Start
 

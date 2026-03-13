@@ -469,11 +469,13 @@
         <ul class="fd-rules" data-lang="en">
           <li><strong>Must</strong> use Markdown syntax (headings, tables, lists, etc.)</li>
           <li>Section structure is flexible — organize freely to suit the agent's domain</li>
+          <li>Can embed multi-file content such as <code>AGENTS.md</code>, <code>IDENTITY.md</code>, <code>SOUL.md</code>, etc. — concatenate them into a single Markdown string with clear heading separators</li>
           <li>Newlines in JSON are encoded as <code>\n</code></li>
         </ul>
         <ul class="fd-rules" data-lang="zh">
           <li><strong>必须</strong>使用 Markdown 语法（标题、表格、列表等）</li>
           <li>章节结构灵活 — 可根据 Agent 的领域自由组织</li>
+          <li>可嵌入多文件内容，如 <code>AGENTS.md</code>、<code>IDENTITY.md</code>、<code>SOUL.md</code> 等 — 将它们拼接为一个 Markdown 字符串，并使用清晰的标题分隔</li>
           <li>JSON 中的换行符编码为 <code>\n</code></li>
         </ul>
       </div>
@@ -487,6 +489,22 @@
         </div>
         <p data-lang="en">Specifies which runtime template to use when instantiating the agent. Defaults to <code>"default"</code>. Templates control the agent's execution environment, prompt assembly strategy, and interaction patterns.</p>
         <p data-lang="zh">指定实例化 Agent 时使用的运行时模板，默认为 <code>"default"</code>。模板控制 Agent 的执行环境、提示词组装策略和交互模式。</p>
+        <p data-lang="en">AgentProfile is runtime-agnostic. The following runtimes are known to be compatible:</p>
+        <p data-lang="zh">AgentProfile 与运行时无关。以下运行时已知兼容：</p>
+        <ul class="fd-rules" data-lang="en">
+          <li><a href="https://github.com/openclaw/openclaw" style="color:var(--primary-light)">OpenClaw</a> — open-source agent runtime</li>
+          <li><a href="https://github.com/anomalyco/opencode" style="color:var(--primary-light)">OpenCode</a> — AI-powered coding agent</li>
+          <li><a href="https://github.com/openai/codex" style="color:var(--primary-light)">Codex</a> — OpenAI's coding agent</li>
+          <li><a href="https://github.com/anthropics/claude-code" style="color:var(--primary-light)">Claude Code</a> — Anthropic's agentic coding tool</li>
+          <li><a href="https://github.com/fairyshine/OpenBunny" style="color:var(--primary-light)">OpenBunny</a> — lightweight agent framework</li>
+        </ul>
+        <ul class="fd-rules" data-lang="zh">
+          <li><a href="https://github.com/openclaw/openclaw" style="color:var(--primary-light)">OpenClaw</a> — 开源 Agent 运行时</li>
+          <li><a href="https://github.com/anomalyco/opencode" style="color:var(--primary-light)">OpenCode</a> — AI 驱动的编程 Agent</li>
+          <li><a href="https://github.com/openai/codex" style="color:var(--primary-light)">Codex</a> — OpenAI 的编程 Agent</li>
+          <li><a href="https://github.com/anthropics/claude-code" style="color:var(--primary-light)">Claude Code</a> — Anthropic 的智能编程工具</li>
+          <li><a href="https://github.com/fairyshine/OpenBunny" style="color:var(--primary-light)">OpenBunny</a> — 轻量级 Agent 框架</li>
+        </ul>
       </div>
 
       <!-- tools -->
@@ -549,8 +567,8 @@
     <div class="spec-section" id="details-format">
       <h2 data-lang="en">4. Details <span>Format</span></h2>
       <h2 data-lang="zh">4. Details <span>格式</span></h2>
-      <p data-lang="en">The <code>details</code> field <strong>must</strong> be a valid Markdown string. The section structure is flexible — you can organize the content freely to match your agent's domain. Below are some commonly used section patterns as reference.</p>
-      <p data-lang="zh"><code>details</code> 字段<strong>必须</strong>是有效的 Markdown 字符串。章节结构不做限制 — 可以根据 Agent 的领域自由组织内容。以下是一些常用的章节模式供参考。</p>
+      <p data-lang="en">The <code>details</code> field <strong>must</strong> be a valid Markdown string. The section structure is flexible — you can organize the content freely to match your agent's domain. You may also compose the content from multiple source files (e.g., <code>AGENTS.md</code>, <code>IDENTITY.md</code>, <code>SOUL.md</code>) and concatenate them into a single Markdown string. Below are some commonly used section patterns as reference.</p>
+      <p data-lang="zh"><code>details</code> 字段<strong>必须</strong>是有效的 Markdown 字符串。章节结构不做限制 — 可以根据 Agent 的领域自由组织内容。你也可以将多个源文件的内容（如 <code>AGENTS.md</code>、<code>IDENTITY.md</code>、<code>SOUL.md</code>）拼接为一个 Markdown 字符串。以下是一些常用的章节模式供参考。</p>
 
       <!-- Role pattern -->
       <div class="section-detail">

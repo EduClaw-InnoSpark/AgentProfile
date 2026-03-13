@@ -79,14 +79,14 @@ AgentProfile 是一个 JSON 文件，结构如下：
 | `name` | `string` | 是 | 简洁的名称，反映 Agent 的角色 |
 | `description` | `string` | 是 | 一句话概括 Agent 的角色和能力 |
 | `details` | `string` | 是 | Markdown 格式的行为规范（参见下方） |
-| `agent_template` | `string` | 否 | 模板类型，默认为 `"default"` |
+| `agent_template` | `string` | 否 | 运行时模板类型，默认为 `"default"`。参见[兼容运行时](#兼容运行时) |
 | `tools` | `string[]` | 否 | 从工具仓库中匹配的工具标识符 |
 | `skills` | `string[]` | 否 | 从技能仓库中匹配的技能模块 |
 | `subagents` | `string[]` | 否 | 用于任务委派的子 Agent 名称，每项引用另一个 AgentProfile 的 `name` |
 
 ### Details 格式
 
-`details` 字段必须是包含以下四个部分的 Markdown 字符串：
+`details` 字段必须是 Markdown 格式的字符串，章节结构不做限制 — 可根据 Agent 的领域自由组织内容。你也可以将多个源文件的内容（如 `AGENTS.md`、`IDENTITY.md`、`SOUL.md`）拼接为一个 Markdown 字符串。以下是一些常用的章节模式供参考：
 
 #### 1. 角色定位
 
@@ -135,6 +135,18 @@ Agent 关注点的结构化分解，使用表格或列表格式。
 2. **步骤二标题**：说明
 3. **步骤三标题**：说明
 ```
+
+## 兼容运行时
+
+AgentProfile 与运行时无关。以下运行时已知兼容：
+
+| 运行时 | 仓库 |
+|--------|------|
+| OpenClaw | [github.com/openclaw/openclaw](https://github.com/openclaw/openclaw) |
+| OpenCode | [github.com/anomalyco/opencode](https://github.com/anomalyco/opencode) |
+| Codex | [github.com/openai/codex](https://github.com/openai/codex) |
+| Claude Code | [github.com/anthropics/claude-code](https://github.com/anthropics/claude-code) |
+| OpenBunny | [github.com/fairyshine/OpenBunny](https://github.com/fairyshine/OpenBunny) |
 
 ## 快速开始
 
