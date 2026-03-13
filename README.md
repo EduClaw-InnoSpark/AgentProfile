@@ -55,8 +55,8 @@ An AgentProfile is a JSON file with the following structure:
   // Required: one-sentence description of the agent's purpose
   "description": "An AI assistant focused on Python code review, providing style checks, bug detection, and performance optimization suggestions.",
 
-  // Required: detailed Markdown spec (see Details Format below)
-  "details": "## Role\n\n...\n\n## Core Dimensions\n\n...\n\n## Standards\n\n...\n\n## Output Format\n\n...",
+  // Required: Markdown-formatted behavioral spec (section structure is flexible)
+  "details": "## Role\n\n...\n\n## Core Dimensions\n\n...",
 
   // Optional: agent template type (default: "default")
   "agent_template": "default",
@@ -88,7 +88,7 @@ An AgentProfile is a JSON file with the following structure:
 
 The `details` field must be a Markdown string. The section structure is entirely flexible — organize freely to suit your agent's domain. You can also compose the content from multiple source files (e.g., `AGENTS.md`, `IDENTITY.md`, `SOUL.md`) and concatenate them into a single Markdown string. Below are some commonly used section patterns as reference:
 
-#### 1. Role
+#### Role
 
 Define the agent's identity, tone, and behavioral philosophy.
 
@@ -99,7 +99,7 @@ As a [domain] [function] assistant, use a [style] approach to help users [core g
 Focus on [key principle].
 ```
 
-#### 2. Core Dimensions
+#### Core Dimensions
 
 Structured breakdown of what the agent focuses on. Use a table or list format.
 
@@ -112,7 +112,7 @@ Structured breakdown of what the agent focuses on. Use a table or list format.
 | Dimension 2 | Specific focus description |
 ```
 
-#### 3. Standards
+#### Standards
 
 Quality criteria and reference standards.
 
@@ -124,7 +124,7 @@ Quality criteria and reference standards.
 - [Feedback methodology]
 ```
 
-#### 4. Output Format
+#### Output Format
 
 Define the structure of the agent's responses.
 
